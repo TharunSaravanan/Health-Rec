@@ -8,21 +8,22 @@
     <fragment
         android:id="@+id/FirstFragment"
         android:name="com.bstharun.covidshot.FirstFragment"
-        android:label="@string/first_fragment_label"
+        android:label="Vaccination Records"
         tools:layout="@layout/fragment_first">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_FirstFragment_to_VaccineEntryFragment"
+            app:destination="@id/VaccineEntryFragment" />
     </fragment>
+
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.bstharun.covidshot.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        android:id="@+id/VaccineEntryFragment"
+        android:name="com.bstharun.covidshot.VaccineEntryFragment"
+        android:label="Vaccination Record Entry"
+        tools:layout="@layout/fragment_vaccine_entry">
 
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
+            android:id="@+id/action_VaccineEntryFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
 </navigation>

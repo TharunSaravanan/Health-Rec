@@ -5,10 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -53,35 +55,18 @@ public class FirstFragment extends Fragment {
         // Set layout manager to position the items
         rvVaccinations.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
-        /* Decorate for divider
-        RecyclerView.ItemDecoration itemDecoration = new
-                DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL);
-        rvVaccinations.addItemDecoration(itemDecoration);
-
-         */
-
-/*        ImageView manualEntry = (ImageView) root.findViewById(R.id.manualEntry);
-
-        manualEntry.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            public void onClick(View v) {
-                NavController navController = MainActivity.navController;
-                navController.navigate(R.id.navigation_manual_entry);
-            }
-        });*/
-
-        return root;
-    }
-
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-/*        view.findViewById(R.id.button_first).setOnClickListener(new View.OnClickListener() {
+        // link floating action button
+        FloatingActionButton fab = root.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 NavHostFragment.findNavController(FirstFragment.this)
-                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
+                        .navigate(R.id.action_FirstFragment_to_VaccineEntryFragment);
+
             }
-        });*/
+        });
+
+        return root;
     }
 }
