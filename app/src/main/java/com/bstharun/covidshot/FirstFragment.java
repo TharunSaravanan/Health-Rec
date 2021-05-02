@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class FirstFragment extends Fragment {
 
@@ -30,21 +29,22 @@ public class FirstFragment extends Fragment {
         RecyclerView rvVaccinations = (RecyclerView) root.findViewById(R.id.rvVaccinations);
 
         // Read data from database
-        //ArrayList<Vaccination> vaccinations = new DatabaseHelper(this.getContext()).getRecentEntries();
+        ArrayList<Vaccination> vaccinations = new DbHelper(this.getContext()).getAllVaccinations();
 
-        ArrayList<Vaccination> vaccinations = new ArrayList<>();
+
+        /* ArrayList<Vaccination> vaccinations = new ArrayList<>();
         Vaccination dose1 = new Vaccination();
         dose1.Name = "Tharun Saravanan";
-        dose1.Date = new Date(2021, 04, 23);
-        dose1.Type = "Pfizer Dose 1";
+        dose1.VaccineDate = new Date(2021, 04, 23);
+        dose1.VaccineName = "Pfizer Dose 1";
 
         Vaccination dose2 = new Vaccination();
         dose2.Name = "Tharun Saravanan";
-        dose2.Date = new Date(2021, 04, 23);
-        dose2.Type = "Pfizer Dose 2";
+        dose2.VaccineDate = new Date(2021, 04, 23);
+        dose2.VaccineName = "Pfizer Dose 2";
 
         vaccinations.add(dose1);
-        vaccinations.add(dose2);
+        vaccinations.add(dose2);*/
 
         // Create adapter passing in the sample user data
         VaccinationAdapter adapter = new VaccinationAdapter(vaccinations);

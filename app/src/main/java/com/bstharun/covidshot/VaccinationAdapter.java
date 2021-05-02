@@ -45,10 +45,10 @@ public class VaccinationAdapter extends   RecyclerView.Adapter<VaccinationAdapte
         holder.txtName.setText(vaccination.Name);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yy");
-        String date = sdf.format(vaccination.Date);
+        String date = sdf.format(vaccination.VaccineDate);
         holder.txtDate.setText(date);
 
-        holder.txtShotType.setText(vaccination.Type);
+        holder.txtShotType.setText(vaccination.VaccineName);
     }
 
     @Override

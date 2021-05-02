@@ -10,67 +10,67 @@
         android:id="@+id/txtTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_margin="20dp"
+        android:text="Covid Shot Entry"
         android:textAlignment="center"
         android:textSize="25dp"
-
-        android:text="Covid Shot Entry"></TextView>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></TextView>
 
 
     <EditText
         android:id="@+id/txtName"
         android:layout_width="340dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="25dp"
+        android:layout_marginTop="20dp"
         android:hint="Enter your name"
         android:inputType="text"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/txtTitle"
+        app:layout_goneMarginTop="20dp" />
 
     <TextView
         android:id="@+id/lblDate"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtName"
-        android:textSize="20sp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:text="Shot Date"></TextView>
+        android:text="Shot Date"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtName"></TextView>
 
 
     <TextView
         android:id="@+id/txtDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@+id/lblDate"
-        app:layout_constraintTop_toBottomOf="@+id/txtName"
-        android:textSize="20sp"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
-        android:text="Apr 25, 2021"></TextView>
+        android:layout_marginTop="20dp"
+        android:text="Apr 25, 2021"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toRightOf="@+id/lblDate"
+        app:layout_constraintTop_toBottomOf="@+id/txtName"></TextView>
 
     <TextView
         android:id="@+id/lblVaccineType"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblDate"
-        android:textSize="20sp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:text="Vaccine"></TextView>
+        android:text="Vaccine"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblDate"></TextView>
 
     <Spinner
         android:id="@+id/spinnerVaccineType"
         android:layout_width="275dp"
         android:layout_height="20dp"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintLeft_toRightOf="@+id/lblVaccineType"
         app:layout_constraintTop_toBottomOf="@+id/txtDate"></Spinner>
 
@@ -78,33 +78,116 @@
         android:id="@+id/lblVaccineDose"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblDate"
-        android:textSize="20sp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="60dp"
-        android:text="Dose"></TextView>
+        android:text="Dose"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblDate"></TextView>
 
     <Spinner
         android:id="@+id/spinnerVaccineDose"
         android:layout_width="275dp"
         android:layout_height="20dp"
-        android:layout_marginTop="60dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="60dp"
         app:layout_constraintLeft_toRightOf="@+id/lblVaccineType"
         app:layout_constraintTop_toBottomOf="@+id/txtDate"></Spinner>
+
+
+    <LinearLayout
+        android:id="@+id/lvCamera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblVaccineDose">
+
+        <LinearLayout
+            android:id="@+id/lvCameraFront"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@color/light_grey"
+            android:orientation="vertical"
+            android:padding="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lblVaccineDose">
+
+            <ImageView
+                android:id="@+id/imageCameraFront"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_baseline_photo_camera_24"></ImageView>
+
+            <TextView
+                android:id="@+id/btnFront"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Front"
+                android:layout_gravity="center"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@+id/lblVaccineDose"></TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lvCameraBack"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:background="@color/light_grey"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lblVaccineDose">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_baseline_photo_camera_24"></ImageView>
+
+            <TextView
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Back"
+                android:layout_gravity="center"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@+id/lblVaccineDose"></TextView>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lvCamera"></Button>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:srcCompat="@drawable/ic_baseline_home_24" />
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
