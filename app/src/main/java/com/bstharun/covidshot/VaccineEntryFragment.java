@@ -3,16 +3,19 @@ package com.bstharun.covidshot;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -28,6 +31,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.File;
 import java.io.IOException;
@@ -90,18 +96,29 @@ public class VaccineEntryFragment extends Fragment {
         btnSave = root.findViewById(R.id.btnSave);
         txtName = (EditText) root.findViewById(R.id.txtName);
 
+        vaccineDate = Calendar.getInstance().getTime();
         txtDate.setText(DateHelper.TodayToString());
 
         setVaccineSpinner();
         setVaccineDoseSpinner();
 
+        txtName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard();
+                }
+            }
+        });
+
 
         txtDate.setOnClickListener(v -> {
+            hideKeyboard();
             showCalendar();
         });
 
         lvCameraFront.setOnClickListener(v -> {
-
+            hideKeyboard();
             if (ContextCompat.checkSelfPermission(this.getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.CAMERA}, PERMISSIONS_CAMERA_REQUEST);
             } else if (ContextCompat.checkSelfPermission(this.getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -113,7 +130,7 @@ public class VaccineEntryFragment extends Fragment {
         });
 
         lvCameraBack.setOnClickListener(v -> {
-
+            hideKeyboard();
             if (ContextCompat.checkSelfPermission(this.getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.CAMERA}, PERMISSIONS_CAMERA_REQUEST);
             } else if (ContextCompat.checkSelfPermission(this.getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -125,16 +142,34 @@ public class VaccineEntryFragment extends Fragment {
         });
 
         btnSave.setOnClickListener(v -> {
+            hideKeyboard();
             saveData();
         });
 
 
         showPhoneStoragePermission();
 
+        // link floating action button
+        FloatingActionButton fab = root.findViewById(R.id.fab_home);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hideKeyboard();
+                NavHostFragment.findNavController(VaccineEntryFragment.this)
+                        .navigate(R.id.action_VaccineEntryFragment_to_FirstFragment);
+
+            }
+        });
+
         return root;
     }
 
     private void saveData(){
+        if(TextUtils.isEmpty(txtName.getText().toString())) {
+            txtName.setError("Enter name");
+            return;
+        }
+
         Vaccination record = new Vaccination();
         record.Id = UUID.randomUUID().toString();
         record.Name = txtName.getText().toString().toUpperCase().trim();
@@ -148,6 +183,8 @@ public class VaccineEntryFragment extends Fragment {
         DbHelper db = new DbHelper(this.getContext());
         db.storeVaccineRecord(record);
 
+        NavHostFragment.findNavController(VaccineEntryFragment.this)
+                .navigate(R.id.action_VaccineEntryFragment_to_FirstFragment);
     }
 
 
@@ -265,6 +302,7 @@ public class VaccineEntryFragment extends Fragment {
     }
 
     void showCalendar() {
+        hideKeyboard();
         final Calendar c = Calendar.getInstance();
         int mYear = c.get(Calendar.YEAR);
         int mMonth = c.get(Calendar.MONTH);
@@ -348,6 +386,15 @@ public class VaccineEntryFragment extends Fragment {
         // Spinner which binds data to spinner
         spinnerDose.setAdapter(ad);
 
+    }
+
+    void hideKeyboard(){
+        // Check if no view has focus:
+        View view = this.getActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)this.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
 }

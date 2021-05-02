@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
@@ -15,9 +17,11 @@ import java.util.ArrayList;
 public class VaccinationAdapter extends   RecyclerView.Adapter<VaccinationAdapter.ViewHolder> {
 
     private ArrayList<Vaccination> vaccinations;
+    private Fragment parentFragment;
 
-    public VaccinationAdapter(ArrayList<Vaccination> vaccinations) {
+    public VaccinationAdapter(ArrayList<Vaccination> vaccinations, Fragment fragment) {
         this.vaccinations = vaccinations;
+        this.parentFragment = fragment;
     }
 
 
@@ -45,8 +49,10 @@ public class VaccinationAdapter extends   RecyclerView.Adapter<VaccinationAdapte
         holder.txtName.setText(vaccination.Name);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yy");
-        String date = sdf.format(vaccination.VaccineDate);
-        holder.txtDate.setText(date);
+
+            String date = sdf.format(vaccination.VaccineDate);
+            holder.txtDate.setText(date);
+
 
         holder.txtShotType.setText(vaccination.VaccineName);
     }
@@ -82,11 +88,12 @@ public class VaccinationAdapter extends   RecyclerView.Adapter<VaccinationAdapte
 
         @Override
         public void onClick(View view) {
-            /*int position = getAdapterPosition();
-            String selectedCategory = mCategories.get(position).Name;
+            int position = getAdapterPosition();
+            Vaccination selectedRecord = vaccinations.get(position);
+            GlobalContainer.VaccinationToView = selectedRecord;
 
-            MainActivity activity = (MainActivity) this.itemView.getContext();
-            activity.loadSubCategoriesFragment(selectedCategory); */
+            NavHostFragment.findNavController(parentFragment)
+                    .navigate(R.id.action_FirstFragment_to_VaccineViewFragment);
         }
 
     }

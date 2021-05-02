@@ -24,7 +24,7 @@ public class DbHelper {
         // if vaccine entry is available, user has edited existing vaccine entry. in that case, delete existing in the arraylist and add the edited entry
         // save all vaccinations
 
-        ArrayList<Vaccination> vaccinations = new ArrayList<>();
+        ArrayList<Vaccination> vaccinations = getAllVaccinations();
         vaccinations.add(vaccineEntry);
         saveAllVaccinations(vaccinations);
     }

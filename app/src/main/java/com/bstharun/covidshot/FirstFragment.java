@@ -31,23 +31,8 @@ public class FirstFragment extends Fragment {
         // Read data from database
         ArrayList<Vaccination> vaccinations = new DbHelper(this.getContext()).getAllVaccinations();
 
-
-        /* ArrayList<Vaccination> vaccinations = new ArrayList<>();
-        Vaccination dose1 = new Vaccination();
-        dose1.Name = "Tharun Saravanan";
-        dose1.VaccineDate = new Date(2021, 04, 23);
-        dose1.VaccineName = "Pfizer Dose 1";
-
-        Vaccination dose2 = new Vaccination();
-        dose2.Name = "Tharun Saravanan";
-        dose2.VaccineDate = new Date(2021, 04, 23);
-        dose2.VaccineName = "Pfizer Dose 2";
-
-        vaccinations.add(dose1);
-        vaccinations.add(dose2);*/
-
         // Create adapter passing in the sample user data
-        VaccinationAdapter adapter = new VaccinationAdapter(vaccinations);
+        VaccinationAdapter adapter = new VaccinationAdapter(vaccinations, this);
 
         // Attach the adapter to the recyclerview to populate items
         rvVaccinations.setAdapter(adapter);

@@ -14,6 +14,10 @@
         <action
             android:id="@+id/action_FirstFragment_to_VaccineEntryFragment"
             app:destination="@id/VaccineEntryFragment" />
+
+        <action
+            android:id="@+id/action_FirstFragment_to_VaccineViewFragment"
+            app:destination="@id/VaccineViewFragment" />
     </fragment>
 
     <fragment
@@ -26,4 +30,16 @@
             android:id="@+id/action_VaccineEntryFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/VaccineViewFragment"
+        android:name="com.bstharun.covidshot.VaccineView"
+        android:label="Vaccination Record View"
+        tools:layout="@layout/fragment_vaccine_view">
+
+        <action
+            android:id="@+id/action_VaccineViewFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+
 </navigation>
