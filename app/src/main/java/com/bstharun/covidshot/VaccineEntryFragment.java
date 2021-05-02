@@ -124,7 +124,7 @@ public class VaccineEntryFragment extends Fragment {
             } else if (ContextCompat.checkSelfPermission(this.getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSIONS_WRITE_EXTERNAL_STORAGE_REQUEST);
             } else {
-                frontImageFileName = "Front - " + String.valueOf(System.currentTimeMillis());
+                frontImageFileName = "Front-" + String.valueOf(System.currentTimeMillis()) + ".jpg";
                 takePicture(frontImageFileName);
             }
         });

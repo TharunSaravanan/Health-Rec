@@ -56,4 +56,21 @@ public class DbHelper {
         edit.putString("all-vaccine-records", json);
         edit.commit();
     }
+
+    public void deleteVaccineRecord(String recordId) {
+        ArrayList<Vaccination> allVaccinations = getAllVaccinations();          // load all vaccine records from database
+        int itemIndex = -1;
+
+        for (int i = 0; i < allVaccinations.size(); i++) {
+            if (allVaccinations.get(i).Id.equals(recordId)) {
+                itemIndex = i;                                                  // item at this position matches the record to be deleted
+                break;
+            }
+        }
+
+        if (itemIndex >= 0) {
+            allVaccinations.remove(itemIndex);                                      // now item is removed from the array list
+            saveAllVaccinations(allVaccinations);
+        }
+    }
 }
