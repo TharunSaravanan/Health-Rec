@@ -1,4 +1,4 @@
-package com.bstharun.covidshot;
+package com.bstharun.healthrec;
 
 import org.junit.Test;
 

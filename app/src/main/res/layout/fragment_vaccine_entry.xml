@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:text="Covid Shot Entry"
+        android:text="Vaccine Record Entry"
         android:textAlignment="center"
         android:textSize="25dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +23,8 @@
         android:layout_width="340dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="35dp"
+
         android:hint="Enter your name"
         android:inputType="text"
         android:textSize="20sp"
@@ -36,7 +37,7 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="35dp"
         android:text="Shot Date"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,7 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="35dp"
         android:text="Apr 25, 2021"
         android:textSize="20sp"
         app:layout_constraintLeft_toRightOf="@+id/lblDate"
@@ -59,40 +60,45 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="35dp"
         android:text="Vaccine"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lblDate"></TextView>
 
-    <Spinner
-        android:id="@+id/spinnerVaccineType"
-        android:layout_width="275dp"
-        android:layout_height="20dp"
+    <EditText
+        android:id="@+id/txtVaccineType"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
+
+        android:hint="Enter vaccine name"
+        android:inputType="text"
+        android:textSize="20sp"
         app:layout_constraintLeft_toRightOf="@+id/lblVaccineType"
-        app:layout_constraintTop_toBottomOf="@+id/txtDate"></Spinner>
+        app:layout_constraintTop_toBottomOf="@+id/txtDate"
+        app:layout_goneMarginTop="20dp" />
 
     <TextView
         android:id="@+id/lblVaccineDose"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="35dp"
         android:text="Dose"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblDate"></TextView>
+        app:layout_constraintTop_toBottomOf="@+id/lblVaccineType"></TextView>
 
     <Spinner
         android:id="@+id/spinnerVaccineDose"
         android:layout_width="275dp"
-        android:layout_height="20dp"
+        android:layout_height="27dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="35dp"
         app:layout_constraintLeft_toRightOf="@+id/lblVaccineType"
-        app:layout_constraintTop_toBottomOf="@+id/txtDate"></Spinner>
+        app:layout_constraintTop_toBottomOf="@+id/txtVaccineType"></Spinner>
 
 
     <LinearLayout
@@ -100,7 +106,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="35dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -111,7 +119,7 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:background="@color/light_grey"
             android:orientation="vertical"
@@ -173,7 +181,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lvCamera"></Button>

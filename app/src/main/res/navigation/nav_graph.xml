@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.bstharun.covidshot.FirstFragment"
+        android:name="com.bstharun.healthrec.FirstFragment"
         android:label="Vaccination Records"
         tools:layout="@layout/fragment_first">
 
@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/VaccineEntryFragment"
-        android:name="com.bstharun.covidshot.VaccineEntryFragment"
+        android:name="com.bstharun.healthrec.VaccineEntryFragment"
         android:label="Vaccination Record Entry"
         tools:layout="@layout/fragment_vaccine_entry">
 
@@ -33,13 +33,17 @@
 
     <fragment
         android:id="@+id/VaccineViewFragment"
-        android:name="com.bstharun.covidshot.VaccineView"
+        android:name="com.bstharun.healthrec.VaccineView"
         android:label="Vaccination Record View"
         tools:layout="@layout/fragment_vaccine_view">
 
         <action
             android:id="@+id/action_VaccineViewFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
+
+        <action
+            android:id="@+id/action_VaccineViewFragment_to_VaccineEntryFragment"
+            app:destination="@id/VaccineEntryFragment" />
     </fragment>
 
 </navigation>

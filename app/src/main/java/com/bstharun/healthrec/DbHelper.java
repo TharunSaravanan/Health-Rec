@@ -1,4 +1,4 @@
-package com.bstharun.covidshot;
+package com.bstharun.healthrec;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -25,13 +25,27 @@ public class DbHelper {
         // save all vaccinations
 
         ArrayList<Vaccination> vaccinations = getAllVaccinations();
+
+        Vaccination alreadyExistingRecord = null;
+        // search all existing vaccines for this record
+        for(int i = 0; i < vaccinations.size(); i++){
+            if (vaccinations.get(i).Id.equals(vaccineEntry.Id)) {
+                alreadyExistingRecord = vaccinations.get(i);
+            }
+        }
+
+        // record exist already. remove it.
+        if (alreadyExistingRecord != null){
+            vaccinations.remove(alreadyExistingRecord);
+        }
+
         vaccinations.add(vaccineEntry);
         saveAllVaccinations(vaccinations);
     }
 
     public ArrayList<Vaccination> getAllVaccinations() {
         ArrayList<Vaccination> allVaccines = new ArrayList<>();
-        SharedPreferences prefs = context.getSharedPreferences("com.bstharun.covidshot", Context.MODE_PRIVATE);
+        SharedPreferences prefs = context.getSharedPreferences("com.bstharun.healthrec", Context.MODE_PRIVATE);
         prefs.getBoolean("keystring", true);
 
         String json = prefs.getString("all-vaccine-records", "");
@@ -47,7 +61,7 @@ public class DbHelper {
     }
 
     public void saveAllVaccinations(ArrayList<Vaccination> allVaccinations) {
-        SharedPreferences prefs = context.getSharedPreferences("com.bstharun.covidshot", Context.MODE_PRIVATE);
+        SharedPreferences prefs = context.getSharedPreferences("com.bstharun.healthrec", Context.MODE_PRIVATE);
         Gson gson = new Gson();
         String json = gson.toJson(allVaccinations);
 

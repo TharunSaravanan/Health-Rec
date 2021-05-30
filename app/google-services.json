@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "981350375805",
+    "project_id": "health-rec-972d7",
+    "storage_bucket": "health-rec-972d7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:981350375805:android:787d1633605c9208402c14",
+        "android_client_info": {
+          "package_name": "com.bstharun.healthrec"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "981350375805-569jb85145tut3utfs4f6t5ba7vqk8vk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYUyi5eODTHP_O4WMIo0Fm9kXYTLGPAvM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "981350375805-569jb85145tut3utfs4f6t5ba7vqk8vk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

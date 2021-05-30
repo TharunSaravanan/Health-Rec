@@ -1,24 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.bstharun.covidshot.MainActivity">
+    tools:context="com.bstharun.healthrec.MainActivity">
 
 
     <item
         android:id="@+id/action_home"
         android:orderInCategory="100"
         android:title="Home"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/action_vaccine_entry"
-        android:orderInCategory="200"
-        android:title="Add Vaccine Record"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="300"
-        android:title="@string/action_settings"
         app:showAsAction="never" />
 </menu>

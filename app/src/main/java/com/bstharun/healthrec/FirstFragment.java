@@ -1,10 +1,11 @@
-package com.bstharun.covidshot;
+package com.bstharun.healthrec;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,25 +28,42 @@ public class FirstFragment extends Fragment {
 
         // Lookup the recyclerview in activity layout
         RecyclerView rvVaccinations = (RecyclerView) root.findViewById(R.id.rvVaccinations);
+        CardView cvEmpty = root.findViewById(R.id.cvEmptyCard);
 
         // Read data from database
         ArrayList<Vaccination> vaccinations = new DbHelper(this.getContext()).getAllVaccinations();
 
-        // Create adapter passing in the sample user data
-        VaccinationAdapter adapter = new VaccinationAdapter(vaccinations, this);
+        if (vaccinations.size() == 0){
+            cvEmpty.setVisibility(View.VISIBLE);
+            rvVaccinations.setVisibility(View.INVISIBLE);
 
-        // Attach the adapter to the recyclerview to populate items
-        rvVaccinations.setAdapter(adapter);
+            cvEmpty.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    GlobalContainer.VaccinationToEdit = null;
+                    NavHostFragment.findNavController(FirstFragment.this)
+                            .navigate(R.id.action_FirstFragment_to_VaccineEntryFragment);
 
-        // Set layout manager to position the items
-        rvVaccinations.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+                }
+            });
+        }
+        else {
+            cvEmpty.setVisibility(View.INVISIBLE);
+            rvVaccinations.setVisibility(View.VISIBLE);
+            // Create adapter passing in the sample user data
+            VaccinationAdapter adapter = new VaccinationAdapter(vaccinations, this);
+            // Attach the adapter to the recyclerview to populate items
+            rvVaccinations.setAdapter(adapter);
+            // Set layout manager to position the items
+            rvVaccinations.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        }
 
         // link floating action button
         FloatingActionButton fab = root.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                GlobalContainer.VaccinationToEdit = null;
                 NavHostFragment.findNavController(FirstFragment.this)
                         .navigate(R.id.action_FirstFragment_to_VaccineEntryFragment);
 

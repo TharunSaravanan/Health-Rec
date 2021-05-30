@@ -1,4 +1,4 @@
-package com.bstharun.covidshot;
+package com.bstharun.healthrec;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -24,7 +24,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -48,21 +47,12 @@ public class VaccineEntryFragment extends Fragment {
     public static final int PERMISSIONS_CAMERA_REQUEST = 0;
     public static final int PERMISSIONS_WRITE_EXTERNAL_STORAGE_REQUEST = 0;
 
-    String[] vaccines = {
-            "Covaxin",
-            "Covishield",
-            "Johnson & Johnson",
-            "Moderna",
-            "Novavax",
-            "Oxford–AstraZeneca",
-            "Pfizer-BioNTech",
-            "Sputnik V"};
+    String[] doses = {"Dose 1", "Dose 2", "Single Dose", "Booster Dose"};
 
-    String[] doses = {"Dose 1", "Dose 2", "Single Dose Vaccine"};
-
+    TextView txtTitle;
     EditText txtName;
     TextView txtDate;
-    Spinner spinnerVaccine;
+    EditText txtVaccineName;
     Spinner spinnerDose;
     LinearLayout lvCameraFront;
     LinearLayout lvCameraBack;
@@ -71,6 +61,9 @@ public class VaccineEntryFragment extends Fragment {
     String frontImageFileName;
     String backImageFileName;
     Date vaccineDate;
+
+    Vaccination editRecord;
+    boolean isFront = false;
 
     public VaccineEntryFragment() {
         // Required empty public constructor
@@ -88,18 +81,18 @@ public class VaccineEntryFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_vaccine_entry, container, false);
 
-        spinnerVaccine = (Spinner) root.findViewById(R.id.spinnerVaccineType);
+        txtVaccineName = (EditText) root.findViewById(R.id.txtVaccineType);
         spinnerDose = (Spinner) root.findViewById(R.id.spinnerVaccineDose);
         txtDate = root.findViewById(R.id.txtDate);
         lvCameraFront = root.findViewById(R.id.lvCameraFront);
         lvCameraBack = root.findViewById(R.id.lvCameraBack);
         btnSave = root.findViewById(R.id.btnSave);
         txtName = (EditText) root.findViewById(R.id.txtName);
+        txtTitle = root.findViewById(R.id.txtTitle);
 
         vaccineDate = Calendar.getInstance().getTime();
         txtDate.setText(DateHelper.TodayToString());
 
-        setVaccineSpinner();
         setVaccineDoseSpinner();
 
         txtName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -124,8 +117,10 @@ public class VaccineEntryFragment extends Fragment {
             } else if (ContextCompat.checkSelfPermission(this.getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSIONS_WRITE_EXTERNAL_STORAGE_REQUEST);
             } else {
-                frontImageFileName = "Front-" + String.valueOf(System.currentTimeMillis()) + ".jpg";
+                frontImageFileName = "Front-" + String.valueOf(System.currentTimeMillis()) + ".jpeg";
+                isFront = true;
                 takePicture(frontImageFileName);
+
             }
         });
 
@@ -136,8 +131,10 @@ public class VaccineEntryFragment extends Fragment {
             } else if (ContextCompat.checkSelfPermission(this.getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSIONS_WRITE_EXTERNAL_STORAGE_REQUEST);
             } else {
-                backImageFileName = "Back - " + String.valueOf(System.currentTimeMillis());
+                backImageFileName = "Back - " + String.valueOf(System.currentTimeMillis()) + ".jpeg";
+                isFront = false;
                 takePicture(backImageFileName);
+                lvCameraBack.setBackgroundColor(getResources().getColor(R.color.dark_green)) ;
             }
         });
 
@@ -161,7 +158,31 @@ public class VaccineEntryFragment extends Fragment {
             }
         });
 
+
+        if (GlobalContainer.VaccinationToEdit != null){
+            bindRecord();
+        }
+
         return root;
+    }
+
+    private void bindRecord(){
+        editRecord = GlobalContainer.VaccinationToEdit;
+        GlobalContainer.VaccinationToEdit = null;
+
+        txtTitle.setText("Edit your shot entry");
+
+        txtName.setText(editRecord.Name);
+        txtDate.setText(DateHelper.DateToString(editRecord.VaccineDate));
+
+        txtVaccineName.setText(editRecord.VaccineName);
+
+        int doseIndex = 0;
+        for(int i =0; i < doses.length; i++)
+            if (doses[i] == editRecord.VaccineDose)
+                doseIndex = i;
+
+        spinnerDose.setSelection(doseIndex);
     }
 
     private void saveData(){
@@ -170,11 +191,25 @@ public class VaccineEntryFragment extends Fragment {
             return;
         }
 
-        Vaccination record = new Vaccination();
-        record.Id = UUID.randomUUID().toString();
+        if(TextUtils.isEmpty(txtVaccineName.getText().toString())) {
+            txtVaccineName.setError("Enter vaccine name");
+            return;
+        }
+
+        Vaccination record;
+
+        if (editRecord != null)
+        {
+            record = editRecord;
+        }
+        else{
+            record = new Vaccination();
+            record.Id = UUID.randomUUID().toString();
+        }
+
         record.Name = txtName.getText().toString().toUpperCase().trim();
         record.VaccineDate = vaccineDate;
-        record.VaccineName = spinnerVaccine.getSelectedItem().toString();
+        record.VaccineName = txtVaccineName.getText().toString().toUpperCase().trim();;
         record.VaccineDose = spinnerDose.getSelectedItem().toString();
         record.FrontImagePath = frontImageFileName;
         record.BackImagePath = backImageFileName;
@@ -198,7 +233,7 @@ public class VaccineEntryFragment extends Fragment {
                 requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, PERMISSIONS_WRITE_EXTERNAL_STORAGE_REQUEST);
             }
         } else {
-            Toast.makeText(this.getActivity(), "Permission (already) Granted!", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(this.getActivity(), "Permission (already) Granted!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -260,7 +295,7 @@ public class VaccineEntryFragment extends Fragment {
             Log.d("MyLog", "getAbsoluteFile: " + image.getAbsoluteFile());
             image.createNewFile();
 
-            Uri outputFileUri = FileProvider.getUriForFile(this.getActivity(), "com.bstharun.covidshot.fileprovider", image);
+            Uri outputFileUri = FileProvider.getUriForFile(this.getActivity(), "com.bstharun.healthrec.fileprovider", image);
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
             startActivityForResult(cameraIntent, PERMISSIONS_CAMERA_REQUEST);
@@ -277,17 +312,17 @@ public class VaccineEntryFragment extends Fragment {
 
         if (requestCode == PERMISSIONS_CAMERA_REQUEST) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this.getActivity(), "Camera permission granted.", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this.getActivity(), "Camera permission granted.", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(this.getActivity(), "Camera permission denied.", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this.getActivity(), "Camera permission denied.", Toast.LENGTH_LONG).show();
             }
         }
 
         if (requestCode == PERMISSIONS_WRITE_EXTERNAL_STORAGE_REQUEST) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this.getActivity(), "Storage permission granted.", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this.getActivity(), "Storage permission granted.", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(this.getActivity(), "Storage permission denied.", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this.getActivity(), "Storage permission denied.", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -297,6 +332,13 @@ public class VaccineEntryFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 0 && resultCode == RESULT_OK) {
+            if(isFront == true) {
+                lvCameraFront.setBackgroundColor(getResources().getColor(R.color.dark_green));
+            }
+            else
+            {
+                lvCameraBack.setBackgroundColor(getResources().getColor(R.color.dark_green));
+            }
             Log.d("MyLog", "Pic saved");
         }
     }
@@ -328,35 +370,6 @@ public class VaccineEntryFragment extends Fragment {
         datePickerDialog.show();
     }
 
-    void setVaccineSpinner() {
-
-
-        spinnerVaccine.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                Log.d("MyLog", "Selected " + vaccines[position]);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
-            }
-
-        });
-
-        ArrayAdapter ad = new ArrayAdapter(this.getActivity(), android.R.layout.simple_spinner_item, vaccines);
-
-        // set simple layout resource file
-        // for each item of spinner
-        ad.setDropDownViewResource(
-                android.R.layout
-                        .simple_spinner_dropdown_item);
-
-        // Set the ArrayAdapter (ad) data on the
-        // Spinner which binds data to spinner
-        spinnerVaccine.setAdapter(ad);
-
-    }
 
     void setVaccineDoseSpinner() {
 

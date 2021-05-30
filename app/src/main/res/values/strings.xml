@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CovidShot</string>
+    <string name="app_name">Health Rec</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>

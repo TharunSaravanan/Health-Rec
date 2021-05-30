@@ -1,4 +1,4 @@
-package com.bstharun.covidshot;
+package com.bstharun.healthrec;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -54,7 +54,7 @@ public class VaccinationAdapter extends   RecyclerView.Adapter<VaccinationAdapte
             holder.txtDate.setText(date);
 
 
-        holder.txtShotType.setText(vaccination.VaccineName);
+        holder.txtShotType.setText(vaccination.VaccineName +" (" + vaccination.VaccineDose + ")");
     }
 
     @Override
